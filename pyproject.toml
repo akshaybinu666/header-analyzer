@@ -7,7 +7,7 @@ name = "header-analyzer"
 version = "1.0.0"
 description = "Audit a website's HTTP security headers and get actionable remediation advice."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = { text = "MIT" }
 keywords = ["security", "http-headers", "csp", "hsts", "appsec", "cli"]
 dependencies = ["requests>=2.25"]
