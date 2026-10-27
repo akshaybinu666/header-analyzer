@@ -1,0 +1,14 @@
+url,score,grade,header,status,severity,value,issue,remediation
+http://127.0.0.1:8099/,29,F,Strict-Transport-Security,WARN,high,,Site was reached over plain HTTP (or redirected to it); HSTS only works over HTTPS.,"Serve the site over HTTPS and redirect all HTTP traffic to it, then add HSTS."
+http://127.0.0.1:8099/,29,F,Content-Security-Policy,WARN,high,default-src 'self'; script-src 'self' 'unsafe-inline',script policy allows 'unsafe-inline'; no frame-ancestors (clickjacking protection relies on X-Frame-Options); no base-uri directive.,"Define a policy, e.g.: Content-Security-Policy: default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'. Use nonces/hashes instead of 'unsafe-inline'."
+http://127.0.0.1:8099/,29,F,X-Frame-Options,PASS,info,SAMEORIGIN,Properly configured.,
+http://127.0.0.1:8099/,29,F,X-Content-Type-Options,PASS,info,nosniff,Properly configured.,
+http://127.0.0.1:8099/,29,F,Referrer-Policy,WARN,low,unsafe-url,'unsafe-url' can leak full URLs to third parties.,Add: Referrer-Policy: strict-origin-when-cross-origin (or no-referrer)
+http://127.0.0.1:8099/,29,F,Permissions-Policy,MISSING,low,,"Powerful browser features (camera, mic, geolocation) are not explicitly restricted.","Add: Permissions-Policy: camera=(), microphone=(), geolocation=() (allow only what you use)"
+http://127.0.0.1:8099/,29,F,Cross-Origin-Opener-Policy,MISSING,low,,"Pages opened cross-origin keep a reference to this window, enabling some side-channel attacks.",Add: Cross-Origin-Opener-Policy: same-origin
+http://127.0.0.1:8099/,29,F,Cross-Origin-Resource-Policy,MISSING,low,,"Other origins can load this site's resources, aiding Spectre-style leaks.",Add: Cross-Origin-Resource-Policy: same-origin (or same-site)
+http://127.0.0.1:8099/,29,F,Cross-Origin-Embedder-Policy,MISSING,info,,Not set. Only required if you need cross-origin isolation (e.g. SharedArrayBuffer).,Add: Cross-Origin-Embedder-Policy: require-corp (only if you need cross-origin isolation)
+http://127.0.0.1:8099/,29,F,X-XSS-Protection,WARN,low,1; mode=block,Legacy XSS auditor is deprecated and can introduce vulnerabilities in old browsers.,"Set 'X-XSS-Protection: 0' or remove it, and rely on CSP instead."
+http://127.0.0.1:8099/,29,F,Server,INFO,low,BaseHTTP/0.6 Python/3.12.3,"Discloses server/framework technology and version, which helps attackers target known vulnerabilities.",Remove or genericise the Server header in your web server / framework config.
+http://127.0.0.1:8099/,29,F,X-Powered-By,INFO,low,PHP/7.4,"Discloses server/framework technology and version, which helps attackers target known vulnerabilities.",Remove or genericise the X-Powered-By header in your web server / framework config.
+http://127.0.0.1:8099/,29,F,Set-Cookie (sid),WARN,medium,sid=<redacted>; Path=/,"Cookie missing HttpOnly, missing SameSite.",Set cookies with: Secure; HttpOnly; SameSite=Lax (or Strict).

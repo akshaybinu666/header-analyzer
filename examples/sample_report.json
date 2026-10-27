@@ -1,0 +1,114 @@
+{
+  "requested_url": "http://127.0.0.1:8099",
+  "final_url": "http://127.0.0.1:8099/",
+  "status_code": 200,
+  "scanned_at": "2026-10-27T13:07:29+00:00",
+  "score": 29,
+  "grade": "F",
+  "findings": [
+    {
+      "header": "Strict-Transport-Security",
+      "status": "WARN",
+      "severity": "high",
+      "value": "",
+      "issue": "Site was reached over plain HTTP (or redirected to it); HSTS only works over HTTPS.",
+      "remediation": "Serve the site over HTTPS and redirect all HTTP traffic to it, then add HSTS."
+    },
+    {
+      "header": "Content-Security-Policy",
+      "status": "WARN",
+      "severity": "high",
+      "value": "default-src 'self'; script-src 'self' 'unsafe-inline'",
+      "issue": "script policy allows 'unsafe-inline'; no frame-ancestors (clickjacking protection relies on X-Frame-Options); no base-uri directive.",
+      "remediation": "Define a policy, e.g.: Content-Security-Policy: default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'. Use nonces/hashes instead of 'unsafe-inline'."
+    },
+    {
+      "header": "X-Frame-Options",
+      "status": "PASS",
+      "severity": "info",
+      "value": "SAMEORIGIN",
+      "issue": "Properly configured.",
+      "remediation": ""
+    },
+    {
+      "header": "X-Content-Type-Options",
+      "status": "PASS",
+      "severity": "info",
+      "value": "nosniff",
+      "issue": "Properly configured.",
+      "remediation": ""
+    },
+    {
+      "header": "Referrer-Policy",
+      "status": "WARN",
+      "severity": "low",
+      "value": "unsafe-url",
+      "issue": "'unsafe-url' can leak full URLs to third parties.",
+      "remediation": "Add: Referrer-Policy: strict-origin-when-cross-origin (or no-referrer)"
+    },
+    {
+      "header": "Permissions-Policy",
+      "status": "MISSING",
+      "severity": "low",
+      "value": "",
+      "issue": "Powerful browser features (camera, mic, geolocation) are not explicitly restricted.",
+      "remediation": "Add: Permissions-Policy: camera=(), microphone=(), geolocation=() (allow only what you use)"
+    },
+    {
+      "header": "Cross-Origin-Opener-Policy",
+      "status": "MISSING",
+      "severity": "low",
+      "value": "",
+      "issue": "Pages opened cross-origin keep a reference to this window, enabling some side-channel attacks.",
+      "remediation": "Add: Cross-Origin-Opener-Policy: same-origin"
+    },
+    {
+      "header": "Cross-Origin-Resource-Policy",
+      "status": "MISSING",
+      "severity": "low",
+      "value": "",
+      "issue": "Other origins can load this site's resources, aiding Spectre-style leaks.",
+      "remediation": "Add: Cross-Origin-Resource-Policy: same-origin (or same-site)"
+    },
+    {
+      "header": "Cross-Origin-Embedder-Policy",
+      "status": "MISSING",
+      "severity": "info",
+      "value": "",
+      "issue": "Not set. Only required if you need cross-origin isolation (e.g. SharedArrayBuffer).",
+      "remediation": "Add: Cross-Origin-Embedder-Policy: require-corp (only if you need cross-origin isolation)"
+    },
+    {
+      "header": "X-XSS-Protection",
+      "status": "WARN",
+      "severity": "low",
+      "value": "1; mode=block",
+      "issue": "Legacy XSS auditor is deprecated and can introduce vulnerabilities in old browsers.",
+      "remediation": "Set 'X-XSS-Protection: 0' or remove it, and rely on CSP instead."
+    },
+    {
+      "header": "Server",
+      "status": "INFO",
+      "severity": "low",
+      "value": "BaseHTTP/0.6 Python/3.12.3",
+      "issue": "Discloses server/framework technology and version, which helps attackers target known vulnerabilities.",
+      "remediation": "Remove or genericise the Server header in your web server / framework config."
+    },
+    {
+      "header": "X-Powered-By",
+      "status": "INFO",
+      "severity": "low",
+      "value": "PHP/7.4",
+      "issue": "Discloses server/framework technology and version, which helps attackers target known vulnerabilities.",
+      "remediation": "Remove or genericise the X-Powered-By header in your web server / framework config."
+    },
+    {
+      "header": "Set-Cookie (sid)",
+      "status": "WARN",
+      "severity": "medium",
+      "value": "sid=<redacted>; Path=/",
+      "issue": "Cookie missing HttpOnly, missing SameSite.",
+      "remediation": "Set cookies with: Secure; HttpOnly; SameSite=Lax (or Strict)."
+    }
+  ]
+}
